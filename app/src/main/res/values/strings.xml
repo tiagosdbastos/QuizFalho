@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">QuizFalho</string>
+    <string name="Slogan">Seu app de quiz favorito!</string>
+    <string name="AppName">ZereQuiz</string>
 </resources>
