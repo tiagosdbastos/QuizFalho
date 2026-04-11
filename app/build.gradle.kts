@@ -4,16 +4,11 @@ plugins {
 
 android {
     namespace = "com.example.quizfalho"
-    compileSdk {
-        version = release(36) {
-            minorApiLevel = 1
-        }
-    }
+    compileSdk = 36
 
     buildFeatures {
         viewBinding = true
     }
-
 
     defaultConfig {
         applicationId = "com.example.quizfalho"
