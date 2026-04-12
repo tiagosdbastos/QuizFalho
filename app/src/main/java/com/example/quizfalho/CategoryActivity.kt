@@ -9,19 +9,19 @@ import com.example.quizfalho.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityCategoryBinding
+    private lateinit var binding: ActivityCategoryBinding // Declare a variável de ligação
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_category)
 
-        binding = ActivityCategoryBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = ActivityCategoryBinding.inflate(layoutInflater) // Inicialize a variável de ligação
+        setContentView(binding.root) //raiz da view de ligação como conteúdo da atividade
 
-        var nomeCategoria = intent.getStringExtra("NOME_CATEGORIA")
+        val nomeCategoria = intent.getStringExtra("NOME_CATEGORIA")
 
-        var imagemRes = when (nomeCategoria){
+        val imagemRes = when (nomeCategoria){ //recebe a categoria e retorna imagem correspondente
 
          "Historia" -> R.drawable.ic_school
          "Ciencias" -> R.drawable.ic_ciencia
