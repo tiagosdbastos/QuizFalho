@@ -1,32 +1,44 @@
 package com.example.quizfalho
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.quizfalho.databinding.ActivityMainBinding
-import android.view.View
-import android.content.Intent
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
-    private lateinit var binding: ActivityMainBinding // Declare a variável de ligação
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
-        binding = ActivityMainBinding.inflate(layoutInflater) // Inicialize a variável de ligação
-        setContentView(binding.root) //raiz da view de ligação como conteúdo da atividade
+        // Habilita o design de borda a borda
+        // enableEdgeToEdge()
 
-        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        // Inicializa o View Binding
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // Teste para confirmar que a Activity iniciou
+        Toast.makeText(this, "App abriu com sucesso!", Toast.LENGTH_LONG).show()
+
+        // Configura as margens para as barras do sistema (status bar, navigation bar)
+        //ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
+        //    val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+        //    v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+        //    insets
+       // }
+
+        // Chama a função que configura os cliques
         setListeners()
     }
-    private fun setListeners() { //aqui ficam os listeners de cada card   colocar escutadores
+
+    private fun setListeners() {
         binding.cardHistoria.setOnClickListener(this)
         binding.cardCiencias.setOnClickListener(this)
         binding.cardEsportes.setOnClickListener(this)
@@ -34,32 +46,25 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
+        val intent = Intent(this, CategoryActivity::class.java)
+
         when (v?.id) {
             R.id.cardHistoria -> {
-//                println("Clicou no card História")
-                val intent = Intent(this, CategoryActivity::class.java)
                 intent.putExtra("NOME_CATEGORIA", "Historia")
                 startActivity(intent)
             }
             R.id.cardCiencias -> {
-//                println("Clicou no card Ciências")
-                val intent = Intent(this, CategoryActivity::class.java)
                 intent.putExtra("NOME_CATEGORIA", "Ciencias")
                 startActivity(intent)
             }
             R.id.cardEsportes -> {
-//                println("Clicou no card Esportes")
-                val intent = Intent(this, CategoryActivity::class.java)
                 intent.putExtra("NOME_CATEGORIA", "Sports")
                 startActivity(intent)
             }
             R.id.cardArte -> {
-//                println("Clicou no card Arte")
-                val intent = Intent(this, CategoryActivity::class.java)
                 intent.putExtra("NOME_CATEGORIA", "Art")
                 startActivity(intent)
             }
         }
-
-        }
     }
+}
