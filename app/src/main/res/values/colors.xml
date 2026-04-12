@@ -8,4 +8,5 @@
     <color name="textoSecundario">#A7A9BE</color>
     <color name="acerto">#4CAF50</color>
     <color name="erro">#EF5350</color>
+    <color name="black">#000000</color>
 </resources>

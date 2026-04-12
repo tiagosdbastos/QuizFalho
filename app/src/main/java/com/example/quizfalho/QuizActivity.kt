@@ -1,5 +1,6 @@
 package com.example.quizfalho
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.RadioButton
@@ -119,21 +120,29 @@ class QuizActivity : AppCompatActivity() {
     }
 
     private fun mostrarTelaParabenizacao() {
-        binding.optionsGroup.visibility = View.GONE
-        binding.txtQuestionNumber.visibility = View.GONE
-        binding.txtLiveScore.visibility = View.GONE
-        binding.btnVoltarLobby.visibility = View.GONE
-
-        binding.btnNext.text = "SAIR"
-        binding.btnNext.setOnClickListener { finish() }
-
-        val feedback = when {
-            score <= 40 -> "Não desanime! Vamos tentar de novo? ✨"
-            score <= 70 -> "Muito bem! Você teve um ótimo aproveitamento! 🚀"
-            else -> "INCRÍVEL! Desempenho impecável! 👑"
-        }
-
-        binding.txtQuestion.text = "Fim do Quiz!\n\n$feedback\n\nPontos: $score"
-
+        val intent = Intent(this, ResultActivity::class.java)
+        intent.putExtra("PONTUACAO", score)
+        startActivity(intent)
+        finish()
     }
+
+//    private fun mostrarTelaParabenizacao() {
+//        binding.optionsGroup.visibility = View.GONE
+//        binding.txtQuestionNumber.visibility = View.GONE
+//        binding.txtLiveScore.visibility = View.GONE
+//        binding.btnVoltarLobby.visibility = View.GONE
+//
+//        binding.btnNext.text = "SAIR"
+//        binding.btnNext.setOnClickListener { finish() }
+//
+//        val feedback = when {
+//            score <= 40 -> "Não desanime! Vamos tentar de novo? ✨"
+//            score <= 70 -> "Muito bem! Você teve um ótimo aproveitamento! 🚀"
+//            else -> "INCRÍVEL! Desempenho impecável! 👑"
+//        }
+//
+//        binding.txtQuestion.text = "Fim do Quiz!\n\n$feedback\n\nPontos: $score"
+//
+//    }
+
 }
