@@ -1,7 +1,9 @@
 package com.example.quizfalho
 
-import android.graphics.Color
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quizfalho.databinding.ActivityResultBinding
 
@@ -13,30 +15,26 @@ class ResultActivity : AppCompatActivity() {
         binding = ActivityResultBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // Pega a pontuação que veio da CategoryActivity
-        val score = intent.getIntExtra("PONTUACAO", 0)
-        binding.txtPontosFinal.text = "Você fez $score pontos!"
+        val pontuacao = intent.getIntExtra("PONTUACAO", 0)
+        binding.textPontuacao.text = "$pontuacao / 100%"
 
-        when {
-            score <= 40 -> {
-                binding.txtEmoji.text = "🌱"
-                binding.txtFeedback.text = "Não desanime! Cada erro é um passo para o aprendizado. Vamos tentar de novo com carinho? ✨"
-                binding.layoutResultado.setBackgroundColor(Color.parseColor("#0F0E17")) // Laranja fofo
-            }
-            score <= 70 -> {
-                binding.txtEmoji.text = "🚀"
-                binding.txtFeedback.text = "Muito bem! Você teve um ótimo aproveitamento. Só falta um pouquinho para chegar ao topo! Que tal mais uma chance?"
-                binding.layoutResultado.setBackgroundColor(Color.parseColor("#0F0E17")) // Azul fofo
-            }
-            else -> {
-                binding.txtEmoji.text = "👑"
-                binding.txtFeedback.text = "INCRÍVEL! Você brilhou muito! Seu desempenho foi nota dez, parabéns por todo esse conhecimento! 🏆"
-                binding.layoutResultado.setBackgroundColor(Color.parseColor("#0F0E17")) // Verde fofo
-            }
+        Toast.makeText(this, "Você fez $pontuacao pontos!", Toast.LENGTH_LONG).show()
+
+        if (pontuacao == 10) {
+            binding.imageBanner.visibility = View.VISIBLE
         }
 
-        binding.btnSair.setOnClickListener {
-            finish() // Fecha e volta para a tela anterior
+        salvarPontuacao(pontuacao)
+
+        binding.botaoVoltarInicio.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
         }
+    }
+
+    private fun salvarPontuacao(pontuacao: Int) {
+        val prefs = getSharedPreferences("quiz_prefs", MODE_PRIVATE)
+        prefs.edit().putInt("ultima_pontuacao", pontuacao).apply()
     }
 }

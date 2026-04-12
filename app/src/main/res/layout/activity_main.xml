@@ -18,6 +18,15 @@
         android:textSize="70sp"
         android:textStyle="bold" />
 
+    <TextView
+        android:id="@+id/txtUltimaPontuacao"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/textoPrimario"
+        android:textSize="18sp" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="292dp"
