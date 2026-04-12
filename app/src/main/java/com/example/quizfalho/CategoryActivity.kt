@@ -15,14 +15,13 @@ class CategoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_category)
 
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var nomeCategoria = intent.getStringExtra("NOME_CATEGORIA")
+        val nomeCategoria = intent.getStringExtra("NOME_CATEGORIA")
 
-        var imagemRes = when (nomeCategoria){
+        val imagemRes = when (nomeCategoria){
 
             "Historia" -> R.drawable.ic_school
             "Ciencias" -> R.drawable.ic_ciencia
