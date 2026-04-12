@@ -1,5 +1,6 @@
 package com.example.quizfalho
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -38,5 +39,17 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         binding.imagemCategoria.setImageResource(imagemRes)
+
+        // Ainda nao foi adicionado a proxima tela pra esso botao funcionar
+
+        //binding.btnComecar.setOnClickListener {
+        //    val intent = Intent(this, QuizActivity::class.java)
+        //    intent.putExtra("NOME_CATEGORIA", nomeCategoria)
+        //    startActivity(intent)
+        //}
+
+        binding.btnVoltar.setOnClickListener { // botao pra voltar pra tela anterior
+            finish()
+        }
     }
 }
