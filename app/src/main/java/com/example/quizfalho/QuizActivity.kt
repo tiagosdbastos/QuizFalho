@@ -2,18 +2,19 @@ package com.example.quizfalho
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.RadioButton
-import android.widget.RadioGroup
+import android.view.View
+import android.widget.CheckBox
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.quizfalho.databinding.ActivityQuizBinding
 
-class QuizActivity : AppCompatActivity() {
+class QuizActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var binding: ActivityQuizBinding
     private var questions: List<Question> = listOf()
-    private val radioGroups = mutableListOf<RadioGroup>()
+    private val checkBoxGroups = mutableListOf<List<CheckBox>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,21 +32,28 @@ class QuizActivity : AppCompatActivity() {
         }
 
         montarQuestionario()
+        setListeners()
+    }
 
-        binding.btnEnviar.setOnClickListener {
-            if (todasRespondidas()) {
-                val score = calcularPontuacao()
-                val intent = Intent(this, ResultActivity::class.java)
-                intent.putExtra("PONTUACAO", score)
-                startActivity(intent)
-                finish()
-            } else {
-                Toast.makeText(this, "Responda todas as perguntas!", Toast.LENGTH_SHORT).show()
+    private fun setListeners() {
+        binding.btnEnviar.setOnClickListener(this)
+        binding.btnVoltar.setOnClickListener(this)
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.btnEnviar -> {
+                if (todasRespondidas()) {
+                    val score = calcularPontuacao()
+                    val intent = Intent(this, ResultActivity::class.java)
+                    intent.putExtra("PONTUACAO", score)
+                    startActivity(intent)
+                    finish()
+                } else {
+                    Toast.makeText(this, "Responda todas as perguntas!", Toast.LENGTH_SHORT).show()
+                }
             }
-        }
-
-        binding.btnVoltar.setOnClickListener {
-            finish()
+            R.id.btnVoltar -> finish()
         }
     }
 
@@ -57,35 +65,34 @@ class QuizActivity : AppCompatActivity() {
             txtPergunta.textSize = 18f
             txtPergunta.setTextColor(getColor(R.color.textoPrimario))
             txtPergunta.setPadding(0, 32, 0, 8)
+            binding.containerPerguntas.addView(txtPergunta)
 
-            binding.containerPerguntas.addView(txtPergunta, index * 2)
-
-            val radioGroup = RadioGroup(this)
+            val checkBoxList = mutableListOf<CheckBox>()
+            val grupoLayout = LinearLayout(this)
+            grupoLayout.orientation = LinearLayout.VERTICAL
 
             question.options.forEach { opcao ->
-                val rb = RadioButton(this)
-                rb.text = opcao
-                rb.setTextColor(getColor(R.color.textoPrimario))
-                radioGroup.addView(rb)
+                val cb = CheckBox(this)
+                cb.text = opcao
+                cb.setTextColor(getColor(R.color.textoPrimario))
+                grupoLayout.addView(cb)
+                checkBoxList.add(cb)
             }
 
-            binding.containerPerguntas.addView(radioGroup, index * 2 + 1)
-
-            radioGroups.add(radioGroup)
+            binding.containerPerguntas.addView(grupoLayout)
+            checkBoxGroups.add(checkBoxList)
         }
     }
 
     private fun todasRespondidas(): Boolean {
-        return radioGroups.all { it.checkedRadioButtonId != -1 }
+        return checkBoxGroups.all { grupo -> grupo.any { it.isChecked } }
     }
 
     private fun calcularPontuacao(): Int {
         var score = 0
         questions.forEachIndexed { index, question ->
-            val radioGroup = radioGroups[index]
-            val selectedId = radioGroup.checkedRadioButtonId
-            val rb = findViewById<RadioButton>(selectedId) ?: return@forEachIndexed
-            val indiceSelecionado = radioGroup.indexOfChild(rb)
+            val grupo = checkBoxGroups[index]
+            val indiceSelecionado = grupo.indexOfFirst { it.isChecked }
             if (indiceSelecionado == question.correctAnswerIndex) {
                 score += 10
             }

@@ -1,42 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/main"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fundoPrincipal"
-    android:fillViewport="true"
-    android:padding="20dp">
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/containerPerguntas"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="20dp">
 
-        <TextView
-            android:id="@+id/txtTituloQuiz"
+        <LinearLayout
+            android:id="@+id/containerPerguntas"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/textoPrimario"
-            android:layout_marginBottom="20dp"/>
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/btnEnviar"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="20dp"
-            android:text="ENVIAR RESPOSTAS" />
+            <TextView
+                android:id="@+id/txtTituloQuiz"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/textoPrimario"
+                android:layout_marginBottom="20dp"/>
 
-        <Button
-            android:id="@+id/btnVoltar"
-            android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="15dp"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:text="VOLTAR"
-            android:textColor="@color/textoPrimario" />
+        </LinearLayout>
+    </ScrollView>
 
-    </LinearLayout>
-</ScrollView>
+    <Button
+        android:id="@+id/btnEnviar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        android:text="ENVIAR RESPOSTAS" />
+
+    <Button
+        android:id="@+id/btnVoltar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        android:text="VOLTAR"
+        android:textColor="@color/textoPrimario" />
+
+</LinearLayout>
