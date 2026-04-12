@@ -1,46 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:background="@color/fundoPrincipal"
+    android:fillViewport="true"
+    android:padding="20dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txtCategoryTitle"
-            android:layout_width="wrap_content"
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:id="@+id/txtQuestionNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:text="Questão 1/10"
+                android:textColor="@color/textoPrimario"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/txtLiveScore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="0 🏆"
+                android:textColor="@color/textoPrimario"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imagemCategoria"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:id="@+id/txtQuestion"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:textSize="18sp"
-            android:text="Pergunta aqui..." />
+            android:layout_marginTop="25dp"
+            android:text="Carregando pergunta..."
+            android:textColor="@color/textoPrimario"
+            android:textSize="20sp"
+            android:textStyle="bold" />
 
         <RadioGroup
             android:id="@+id/optionsGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="20dp">
 
-            <RadioButton android:id="@+id/opt1" android:layout_width="match_parent" android:layout_height="wrap_content" />
-            <RadioButton android:id="@+id/opt2" android:layout_width="match_parent" android:layout_height="wrap_content" />
-            <RadioButton android:id="@+id/opt3" android:layout_width="match_parent" android:layout_height="wrap_content" />
-            <RadioButton android:id="@+id/opt4" android:layout_width="match_parent" android:layout_height="wrap_content" />
+            <RadioButton android:id="@+id/opt1" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/textoPrimario" android:layout_marginBottom="10dp"/>
+            <RadioButton android:id="@+id/opt2" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/textoPrimario" android:layout_marginBottom="10dp"/>
+            <RadioButton android:id="@+id/opt3" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/textoPrimario" android:layout_marginBottom="10dp"/>
+            <RadioButton android:id="@+id/opt4" android:layout_width="match_parent" android:layout_height="wrap_content" android:textColor="@color/textoPrimario" android:layout_marginBottom="10dp"/>
         </RadioGroup>
 
         <Button
             android:id="@+id/btnNext"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Próxima Pergunta" />
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:text="PRÓXIMA PERGUNTA" />
+
+        <Button
+            android:id="@+id/btnVoltarLobby"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="15dp"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:text="VOLTAR"
+            android:textColor="@color/textoPrimario" />
 
     </LinearLayout>
 </ScrollView>

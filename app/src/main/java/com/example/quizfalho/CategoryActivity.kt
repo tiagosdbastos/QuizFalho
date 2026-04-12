@@ -1,143 +1,54 @@
 package com.example.quizfalho
 
+import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.RadioButton
-import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.example.quizfalho.databinding.ActivityCategoryBinding
 
 class CategoryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCategoryBinding
-    private var questions: List<Question> = listOf()
-    private var currentIndex = 0
-    private var score = 0
-    private var quizIniciado = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_category)
 
         binding = ActivityCategoryBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val nomeCategoria = intent.getStringExtra("NOME_CATEGORIA") ?: "Quiz"
+        var nomeCategoria = intent.getStringExtra("NOME_CATEGORIA")
 
-        questions = QuestionRepository.getQuestionsByCategory(nomeCategoria)
+        var imagemRes = when (nomeCategoria){
 
-        if (questions.isEmpty()) {
-            Toast.makeText(this, "Nenhuma pergunta encontrada!", Toast.LENGTH_LONG).show()
-            finish()
-            return
+            "Historia" -> R.drawable.ic_school
+            "Ciencias" -> R.drawable.ic_ciencia
+            "Sports" -> R.drawable.ic_sports
+            "Art" -> R.drawable.ic_art
+            else -> R.drawable.ic_launcher_background
+
         }
 
-        configurarTelaInicial(nomeCategoria)
-
-        binding.btnNext.setOnClickListener {
-            if (!quizIniciado) {
-                iniciarQuiz()
-            } else {
-                processarResposta()
-            }
+        binding.btnComecar.setOnClickListener {
+            val intent = Intent(this, QuizActivity::class.java)
+            intent.putExtra("NOME_CATEGORIA", nomeCategoria)
+            startActivity(intent)
         }
 
-        binding.btnVoltarLobby.setOnClickListener {
+        binding.btnVoltar.setOnClickListener {
             finish()
         }
-    }
 
-    // 🔹 TELA ANTES DO QUIZ
-    private fun configurarTelaInicial(nome: String) {
-        binding.txtQuestion.text = "Quiz de $nome\n\nPronto para começar? 🚀"
-        binding.btnNext.text = "INICIAR QUIZ"
-
-        binding.optionsGroup.visibility = View.GONE
-        binding.txtQuestionNumber.visibility = View.GONE
-        binding.txtLiveScore.visibility = View.GONE
-    }
-
-    // 🔹 INICIA O QUIZ
-    private fun iniciarQuiz() {
-        quizIniciado = true
-
-        binding.btnNext.text = "PRÓXIMA PERGUNTA"
-
-        binding.optionsGroup.visibility = View.VISIBLE
-        binding.txtQuestionNumber.visibility = View.VISIBLE
-        binding.txtLiveScore.visibility = View.VISIBLE
-        binding.btnVoltarLobby.visibility = View.GONE
-
-        currentIndex = 0
-        score = 0
-
-        exibirPergunta()
-    }
-
-    override fun onBackPressed() {
-        if (quizIniciado) {
-            Toast.makeText(this, "Finalize o quiz primeiro!", Toast.LENGTH_SHORT).show()
-        } else {
-            super.onBackPressed()
-        }
-    }
-
-    // 🔹 RESPOSTAS
-    private fun processarResposta() {
-        val selectedId = binding.optionsGroup.checkedRadioButtonId
-
-        if (selectedId != -1) {
-            verificarResposta(selectedId)
-            currentIndex++
-
-            if (currentIndex < questions.size) {
-                exibirPergunta()
-            } else {
-                mostrarTelaParabenizacao()
-            }
-        } else {
-            Toast.makeText(this, "Selecione uma opção!", Toast.LENGTH_SHORT).show()
-        }
-    }
-
-    private fun exibirPergunta() {
-        val q = questions[currentIndex]
-
-        binding.txtQuestionNumber.text = "Questão ${currentIndex + 1}/${questions.size}"
-        binding.txtQuestion.text = q.text
-
-        binding.optionsGroup.clearCheck()
-        binding.opt1.text = q.options[0]
-        binding.opt2.text = q.options[1]
-        binding.opt3.text = q.options[2]
-        binding.opt4.text = q.options[3]
-    }
-
-    private fun verificarResposta(idSelecionado: Int) {
-        val rbSelecionado = findViewById<RadioButton>(idSelecionado) ?: return
-
-        val indiceSelecionado = binding.optionsGroup.indexOfChild(rbSelecionado)
-
-        if (indiceSelecionado == questions[currentIndex].correctAnswerIndex) {
-            score += 10
-            binding.txtLiveScore.text = "$score 🏆"
-        }
-    }
-
-    private fun mostrarTelaParabenizacao() {
-        binding.optionsGroup.visibility = View.GONE
-        binding.txtQuestionNumber.visibility = View.GONE
-        binding.txtLiveScore.visibility = View.GONE
-        binding.btnVoltarLobby.visibility = View.GONE
-
-        binding.btnNext.text = "SAIR"
-        binding.btnNext.setOnClickListener { finish() }
-
-        val feedback = when {
-            score <= 40 -> "Não desanime! Vamos tentar de novo? ✨"
-            score <= 70 -> "Muito bem! Você teve um ótimo aproveitamento! 🚀"
-            else -> "INCRÍVEL! Desempenho impecável! 👑"
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
 
-        binding.txtQuestion.text = "Fim do Quiz!\n\n$feedback\n\nPontos: $score"
+        binding.imagemCategoria.setImageResource(imagemRes)
+        binding.txtNomeCategoria.text = nomeCategoria
     }
 }

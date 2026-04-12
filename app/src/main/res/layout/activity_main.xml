@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="292dp"
         android:layout_gravity="center"
-        android:src="@drawable/Logo" />
+        android:src="@drawable/logo" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
